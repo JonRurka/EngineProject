@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="GraphicsClass.cpp" />
     <ClCompile Include="InputClass.cpp" />
+    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OpenglClass.cpp" />
     <ClCompile Include="SystemClass.cpp" />
@@ -20,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="GraphicsClass.h" />
     <ClInclude Include="InputClass.h" />
+    <ClInclude Include="Logging.h" />
     <ClInclude Include="OpenglClass.h" />
     <ClInclude Include="SystemClass.h" />
   </ItemGroup>

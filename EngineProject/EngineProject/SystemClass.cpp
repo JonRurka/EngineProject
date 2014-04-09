@@ -27,6 +27,15 @@ bool SystemClass::Initialize()
 	screenWidth = 0;
 	screenHeight = 0;
 
+	// Create Logging object.
+	m_Logging = new Logging;
+	if (!m_Logging)
+	{
+		return false;
+	}
+
+	m_Logging->Log("--- LOG STARTED ---");
+
 	// Create OpenGL object.
 	m_OpenGL = new OpenGLClass;
 	if (!m_OpenGL)
@@ -60,18 +69,27 @@ bool SystemClass::Initialize()
 	}
 
 	// Initialize the graphics object.
-	result = m_Graphics->Initialize(m_OpenGL, m_hwnd);
+	result = m_Graphics->Initialize(m_OpenGL, m_Logging, m_hwnd);
 	if(!result)
 	{
 		MessageBox(m_hwnd, L"Failed to initialize OpenGL.",L"Error", MB_OK);
 		return false;
 	}
 
+	m_Logging->Log("INITIALIZED.");
 	return true;
 }
 
 void SystemClass::Shutdown()
 {
+	if (m_Logging)
+	{
+		m_Logging->Log("Shutting down...");
+		m_Logging->Log("--- END LOG ---");
+		delete m_Logging;
+		m_Logging = 0;
+	}
+
 	// Release the graphics object.
 	if (m_Graphics)
 	{
@@ -90,6 +108,7 @@ void SystemClass::Shutdown()
 	// Release the OpenGL object.
 	if (m_OpenGL)
 	{
+		m_OpenGL->Shutdown(m_hwnd);
 		delete m_OpenGL;
 		m_OpenGL = 0;
 	}
@@ -190,6 +209,7 @@ bool SystemClass::InitializeWindows(OpenGLClass* OpenGL, int& screenWidth, int& 
 	WNDCLASSEX wc;
 	DEVMODE dmScreenSettings;
 	int posX, posY;
+	bool result;
 
 	// Get an external pointer to this object.
 	ApplicationHandle = this;
@@ -227,6 +247,16 @@ bool SystemClass::InitializeWindows(OpenGLClass* OpenGL, int& screenWidth, int& 
 
 	// Don't show the window.
 	ShowWindow(m_hwnd, SW_HIDE);
+
+	// Initialize logging in OpenGL.
+	OpenGL->InitializeLog(m_Logging);
+
+	// Initialize a temporary OpenGL window and load the OpenGL extensions.
+	result = OpenGL->InitializeExtensions(m_hwnd);
+	if (!result)
+	{
+		MessageBox(m_hwnd, L"Could not initialize the OpenGL extentions.", L"Error", MB_OK);
+	}
 
 	// Release the temporary window now that the extensions have been initialized.
 	DestroyWindow(m_hwnd);
@@ -269,6 +299,13 @@ bool SystemClass::InitializeWindows(OpenGLClass* OpenGL, int& screenWidth, int& 
 	if(m_hwnd == NULL)
 	{
 		return false;
+	}
+
+	// Initialize OpenGL now that the window has been created.
+	result = m_OpenGL->InitializeOpenGL(m_hwnd, screenWidth, screenHeight, SCREEN_DEPTH, SCREEN_NEAR, VSYNC_ENABLED);
+	if (!result)
+	{
+		MessageBox(m_hwnd, L"Could not initialize OpenGL, check if video card supports OpenGL 4.0", L"Error", MB_OK);
 	}
 
 	// Bring the window up on the screen and set it as main focus.

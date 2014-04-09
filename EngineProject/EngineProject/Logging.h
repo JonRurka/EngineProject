@@ -1,0 +1,25 @@
+////////////////////////////////////////////////////////////////////////////////
+// Filename: Logging.h
+////////////////////////////////////////////////////////////////////////////////
+#ifndef _LOGGING_H_
+#define _LOGGING_H_
+
+//////////////
+// INCLUDES //
+//////////////
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Logging
+{
+public:
+	Logging();
+	Logging(const Logging&);
+	~Logging();
+
+	void Log(char[]);
+};
+
+#endif

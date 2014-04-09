@@ -1,0 +1,5 @@
+--- LOG STARTED ---
+NVIDIA Corporation - GeForce GTX 760/PCIe/SSE2
+INITIALIZED.
+Shutting down...
+--- END LOG ---

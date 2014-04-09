@@ -20,6 +20,7 @@
 #include "OpenglClass.h"
 #include "InputClass.h"
 #include "GraphicsClass.h"
+#include "Logging.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class name: SystemClass
@@ -50,6 +51,7 @@ private:
 	OpenGLClass* m_OpenGL;
 	InputClass* m_Input;
 	GraphicsClass* m_Graphics;
+	Logging* m_Logging;
 };
 
 /////////////////////////

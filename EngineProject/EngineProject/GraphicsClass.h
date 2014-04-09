@@ -8,11 +8,12 @@
 // MY CLASS INCLUDES //
 ///////////////////////
 #include "OpenglClass.h"
+#include "Logging.h"
 
 /////////////
 // GLOBALS //
 /////////////
-const bool FULL_SCREEN = true;
+const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = false;
 const float SCREEN_DEPTH = 1000.0f;
 const float SCREEN_NEAR = 0.1f;
@@ -27,15 +28,19 @@ public:
 	GraphicsClass(const GraphicsClass&);
 	~GraphicsClass();
 
-	bool Initialize(OpenGLClass*, HWND);
+	bool Initialize(OpenGLClass*, Logging*, HWND);
 	void Shutdown();
 	bool Frame();
 
 private:
 	bool Render();
 
-//private:
+private:
+	OpenGLClass* m_OpenGL;
+	Logging* m_Logging;
 
+	float R, G, B;
+	bool increasingR, increasingG, increasingB;
 };
 
 #endif

@@ -4,3 +4,4 @@
 *.vcxproj.user
 *.exe
 *.dll
+*.tlog

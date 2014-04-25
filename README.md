@@ -10,6 +10,6 @@ TODO:
 * (done) Set up project
 * (done) Framework added.
 * (not done) Add OpenGL.
-* (not done) Add PhysX.
+* (not done) Add Bullet.
 * (not done) Implement system to load .Net library for gameplay code.
 * (not done) Make games \o/
